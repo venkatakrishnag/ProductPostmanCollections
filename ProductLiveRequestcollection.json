@@ -1,0 +1,255 @@
+{
+	"info": {
+		"_postman_id": "89a15363-a0c7-4e9e-9b33-97099740a986",
+		"name": "ProductLiveRequest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetProductReq",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dc92c238-c05c-486c-9f43-cbc21cd36c8e",
+						"exec": [
+							"var jsonData=JSON.parse(responseBody);",
+							"tests[\"Body contains id\"]=responseBody.has(\"id\");",
+							"tests[\"Body contains id equals 1\"]=jsonData[0].id===1;",
+							"console.log(jsonData[0].id);",
+							"tests[\"Body contains Product Name \"]=responseBody.has(\"ProductName\");",
+							"tests[\"Checking ProductName parameter from JSON data\"]=jsonData[0].ProductName==\"Apple TV\";",
+							"tests[\"Body contains Quantity\"]=responseBody.has(\"Quantity\");",
+							"tests[\"Checking Quantity parameter from JSON data\"]=jsonData[0].Quantity==\"200\";",
+							"tests[\"Body contains price\"]=responseBody.has(\"price\");",
+							"tests[\"Checking price parameter from JSON data\"]=jsonData[0].price==\"500\";",
+							"",
+							"tests[\"Body contains id equals 2\"]=jsonData[1].id===2;",
+							"tests[\"Checking 1st object ProductName parameter from JSON data\"]=jsonData[1].ProductName==\"LCD TV\";",
+							"tests[\"Checking 1 object Quantity parameter from JSON data\"]=jsonData[1].Quantity==\"4\";",
+							"tests[\"Checking 1 object price parameter from JSON data\"]=jsonData[1].price==\"114.5\";",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"pm.test(\"product is tv\",function(){",
+							"    pm.expect(jsonData[0].ProductName).to.equal(\"Apple TV\");",
+							"});",
+							"",
+							"",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"",
+							"/*pm.test(\"Response time is less than 300ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(300);",
+							"});*/",
+							"",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:49259/api/GetAllProducts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "49259",
+					"path": [
+						"api",
+						"GetAllProducts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostProductReq",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "55f799ee-85e4-4c68-b9e9-019ff97735f8",
+						"exec": [
+							"var jsonData=JSON.parse(responseBody);",
+							"tests[\"Record is Inserted SucessFully\"]=responseBody.has(\"Record is Inserted SucessFully\");",
+							"tests[\"Body contains id\"]=responseBody.has(\"id\");",
+							"tests[\"Checking id parameter from JSON data\"]=jsonData.m_Item2[\"id\"]==\"999\";",
+							"tests[\"Body contains ProductName\"]=responseBody.has(\"ProductName\");",
+							"tests[\"Checking ProductName parameter from JSON data\"]=jsonData.m_Item2[\"ProductName\"]==\"sony TV\";",
+							"tests[\"Body contains Quantity\"]=responseBody.has(\"Quantity\");",
+							"tests[\"Checking Quantity parameter from JSON data\"]=jsonData.m_Item2[\"Quantity\"]==\"2\";",
+							"tests[\"Body contains price\"]=responseBody.has(\"price\");",
+							"tests[\"Checking price parameter from JSON data\"]=jsonData.m_Item2[\"price\"]==\"94.5\";",
+							"",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"/*if(responseCode.code===200){",
+							"    postman.setNextRequest(\"GetProductReq\");",
+							"}",
+							"else{",
+							"    postman.setNextRequest(\"DeleteProductreq\");",
+							"}*/",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":999,\n\t\"ProductName\": \"sony TV\",\n    \"Quantity\": 2,\n    \"price\": 94.5\n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:49259/api/post",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "49259",
+					"path": [
+						"api",
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteProductReq",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fabed367-37ef-4609-92ec-334ce5438539",
+						"exec": [
+							"var jsonData=JSON.parse(responseBody);",
+							"tests[\"Record Deleted SucessFully\"]=responseBody.has(\"Record Deleted SucessFully\");",
+							"",
+							"tests[\"Checking id parameter from JSON data\"]=jsonData.m_Item2[\"id\"]==\"999\";",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:49259/api/delete/999",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "49259",
+					"path": [
+						"api",
+						"delete",
+						"999"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PutProductReq",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "418d9999-1bfe-4fca-abea-fe5226516122",
+						"exec": [
+							"",
+							"tests[\"Record Updated SucessFully\"]=responseBody.has(\"Record Updated SucessFully\");",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"ProductName\": \"Apple TV\",\n    \"Quantity\": 200,\n    \"price\":500\n\t\n}\n   "
+				},
+				"url": {
+					"raw": "http://localhost:49259/api/put/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "49259",
+					"path": [
+						"api",
+						"put",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
